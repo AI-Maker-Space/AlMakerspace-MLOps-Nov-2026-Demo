@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 464" role="img" aria-labelledby="title desc" xmlns:c2pa="http://c2pa.org/manifest">
+<title id="title">Two rulers, one ranking: fuse by rank, never by score</title>
+<desc id="desc">The question goes to two stores at once. MemoSearch embeds it with bge-small and searches the memo store; ChartSearch embeds it with CLIP&#x27;s text tower and searches the chart store. Each returns its top 3, memos scoring around 0.6 and charts around 0.3 on different scales. Merged by raw score, the top 3 are three memos and no chart. QueryFusionRetriever with mode reciprocal_rerank ignores the scores and adds 1 over 60 plus rank from every list, so the best memo and the best chart both make the top 3.</desc>
+<style>
+  .bg{fill:#FBFAF7}
+  .frame{fill:none;stroke:#E4E1DA;stroke-width:1}
+  .node{fill:#FFFFFF;stroke:#CBD2DA;stroke-width:1.25}
+  .node-soft{fill:#F2F1EC;stroke:none}
+  .node-accent{fill:#EEF0FF;stroke:#4F46E5;stroke-width:1.75}
+  .node-good{fill:#EAF7EE;stroke:#2F9E44;stroke-width:1.5}
+  .node-warn{fill:#FFF1E8;stroke:#D9480F;stroke-width:1.5}
+  .zone{fill:#F4F5FF;stroke:#4F46E5;stroke-width:1.5;stroke-dasharray:6 4}
+  .zone-plain{fill:none;stroke:#AEB6C0;stroke-width:1.25;stroke-dasharray:4 4}
+  .zone-warn{fill:#FFF6F0;stroke:#D9480F;stroke-width:1.5;stroke-dasharray:6 4}
+  .bar{fill:#B9C0FF}
+  .bar-accent{fill:#4F46E5}
+  .bar-muted{fill:#D5D9DE}
+  .bar-good{fill:#2F9E44}
+  .bar-warn{fill:#D9480F}
+  .edge{fill:none;stroke:#7D8794;stroke-width:1.5}
+  .edge-accent{fill:none;stroke:#4F46E5;stroke-width:2}
+  .edge-good{fill:none;stroke:#2F9E44;stroke-width:2}
+  .edge-warn{fill:none;stroke:#D9480F;stroke-width:2}
+  .dashed{stroke-dasharray:5 4}
+  .rule{fill:none;stroke:#E4E1DA;stroke-width:1}
+  .head{fill:#7D8794}
+  .head-accent{fill:#4F46E5}
+  .head-good{fill:#2F9E44}
+  .head-warn{fill:#D9480F}
+  text{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;fill:#1F2328;font-size:13px}
+  .title{font-size:17px;font-weight:650}
+  .subtitle{font-size:13px;fill:#5B6470}
+  .label{font-size:13px;font-weight:600}
+  .small{font-size:11.5px;fill:#5B6470}
+  .tiny{font-size:10.5px;fill:#5B6470}
+  .mono{font-family:Consolas,"SF Mono",ui-monospace,"JetBrains Mono",Menlo,monospace;font-size:12px}
+  .t-accent{fill:#4F46E5}
+  .t-good{fill:#2F9E44}
+  .t-warn{fill:#D9480F}
+  .t-muted{fill:#5B6470}
+  .t-inv{fill:#FFFFFF}
+  .chip{fill:#4F46E5}
+  .chip-warn{fill:#D9480F}
+  .chip-good{fill:#2F9E44}
+  .chip-muted{fill:#5B6470}
+  @media (prefers-color-scheme:dark){
+    .bg{fill:#15171C}
+    .frame{stroke:#2A2E36}
+    .node{fill:#1D2027;stroke:#3A414C}
+    .node-soft{fill:#22262E}
+    .node-accent{fill:#23264A;stroke:#8E8CFF}
+    .node-good{fill:#183224;stroke:#5FD07A}
+    .node-warn{fill:#3A2116;stroke:#FF8A4C}
+    .zone{fill:#1A1C33;stroke:#8E8CFF}
+    .zone-plain{stroke:#58606C}
+    .zone-warn{fill:#2A1A13;stroke:#FF8A4C}
+    .bar{fill:#4B4F9E}
+    .bar-accent{fill:#8E8CFF}
+    .bar-muted{fill:#3A414C}
+    .bar-good{fill:#5FD07A}
+    .bar-warn{fill:#FF8A4C}
+    .edge{stroke:#8892A0}
+    .edge-accent{stroke:#8E8CFF}
+    .edge-good{stroke:#5FD07A}
+    .edge-warn{stroke:#FF8A4C}
+    .rule{stroke:#2A2E36}
+    .head{fill:#8892A0}
+    .head-accent{fill:#8E8CFF}
+    .head-good{fill:#5FD07A}
+    .head-warn{fill:#FF8A4C}
+    text{fill:#E6E8EB}
+    .subtitle,.small,.tiny,.t-muted{fill:#9AA4AF}
+    .t-accent{fill:#A5A3FF}
+    .t-good{fill:#5FD07A}
+    .t-warn{fill:#FF8A4C}
+    .t-inv{fill:#15171C}
+    .chip{fill:#8E8CFF}
+    .chip-warn{fill:#FF8A4C}
+    .chip-good{fill:#5FD07A}
+    .chip-muted{fill:#9AA4AF}
+  }
+</style>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head" d="M0,0 L10,5 L0,10 z"/></marker>
+  <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+  <marker id="arrow-good" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-good" d="M0,0 L10,5 L0,10 z"/></marker>
+  <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="bg" x="0" y="0" width="960" height="464" rx="16"/>
+
+<text class="title" x="32" y="40">Two rulers, one ranking: fuse by rank, never by score</text>
+<text class="subtitle" x="32" y="62">bge-small scores memos around 0.6 and CLIP scores charts around 0.3. Sorted by score, every memo beats every chart.</text>
+
+<!-- the question -->
+<rect class="node-accent" x="32" y="172" width="176" height="120" rx="10"/>
+<text class="label" x="120" y="198" text-anchor="middle">the question</text>
+<text class="small" x="120" y="222" text-anchor="middle">why did the on-call</text>
+<text class="small" x="120" y="239" text-anchor="middle">engineer get paged</text>
+<text class="small" x="120" y="256" text-anchor="middle">about the Coast</text>
+<text class="small" x="120" y="273" text-anchor="middle">region?</text>
+
+<!-- MemoSearch -->
+<rect class="node" x="248" y="96" width="264" height="136" rx="14"/>
+<text class="label mono" x="266" y="122">MemoSearch</text>
+<text class="small" x="266" y="140">bge-small-en-v1.5 · memo store</text>
+<line class="rule" x1="266" y1="152" x2="494" y2="152"/>
+<text class="tiny" x="266" y="174" font-weight="700">1</text>
+<text class="small" x="284" y="174">memo A</text>
+<text class="mono t-muted" x="494" y="174" text-anchor="end">~0.6</text>
+<text class="tiny" x="266" y="194" font-weight="700">2</text>
+<text class="small" x="284" y="194">memo B</text>
+<text class="mono t-muted" x="494" y="194" text-anchor="end">~0.6</text>
+<text class="tiny" x="266" y="214" font-weight="700">3</text>
+<text class="small" x="284" y="214">memo C</text>
+<text class="mono t-muted" x="494" y="214" text-anchor="end">~0.6</text>
+<path class="edge" d="M208,232 C228,232 228,164 246,164" marker-end="url(#arrow)"/>
+
+<!-- ChartSearch -->
+<rect class="node" x="248" y="264" width="264" height="136" rx="14"/>
+<text class="label mono" x="266" y="290">ChartSearch</text>
+<text class="small" x="266" y="308">CLIP text tower · chart store</text>
+<line class="rule" x1="266" y1="320" x2="494" y2="320"/>
+<text class="tiny" x="266" y="342" font-weight="700">1</text>
+<text class="small" x="284" y="342">chart X</text>
+<text class="mono t-muted" x="494" y="342" text-anchor="end">~0.3</text>
+<text class="tiny" x="266" y="362" font-weight="700">2</text>
+<text class="small" x="284" y="362">chart Y</text>
+<text class="mono t-muted" x="494" y="362" text-anchor="end">~0.3</text>
+<text class="tiny" x="266" y="382" font-weight="700">3</text>
+<text class="small" x="284" y="382">chart Z</text>
+<text class="mono t-muted" x="494" y="382" text-anchor="end">~0.3</text>
+<path class="edge" d="M208,232 C228,232 228,332 246,332" marker-end="url(#arrow)"/>
+
+<!-- merged by raw score -->
+<rect class="node-warn" x="600" y="96" width="328" height="136" rx="14"/>
+<text class="label" x="618" y="122">Merged by raw score</text>
+<text class="small t-warn" x="910" y="122" text-anchor="end" font-weight="700">no chart</text>
+<line class="rule" x1="618" y1="134" x2="910" y2="134"/>
+<text class="tiny" x="618" y="156" font-weight="700">1</text>
+<text class="small" x="636" y="156">memo A</text>
+<text class="mono t-muted" x="910" y="156" text-anchor="end">~0.6</text>
+<text class="tiny" x="618" y="176" font-weight="700">2</text>
+<text class="small" x="636" y="176">memo B</text>
+<text class="mono t-muted" x="910" y="176" text-anchor="end">~0.6</text>
+<text class="tiny" x="618" y="196" font-weight="700">3</text>
+<text class="small" x="636" y="196">memo C</text>
+<text class="mono t-muted" x="910" y="196" text-anchor="end">~0.6</text>
+<text class="tiny" x="618" y="222">the two scales are different rulers</text>
+
+<!-- fused by rank -->
+<rect class="node-accent" x="600" y="264" width="328" height="136" rx="14"/>
+<text class="label" x="618" y="290">Fused by rank</text>
+<text class="mono t-accent" x="910" y="290" text-anchor="end" font-weight="600">&quot;reciprocal_rerank&quot;</text>
+<line class="rule" x1="618" y1="302" x2="910" y2="302"/>
+<text class="tiny" x="618" y="324" font-weight="700">1</text>
+<text class="small" x="636" y="324">memo A</text>
+<text class="tiny" x="776" y="324">top of its list</text>
+<text class="mono t-accent" x="910" y="324" text-anchor="end">1/60</text>
+<text class="tiny" x="618" y="344" font-weight="700">2</text>
+<text class="small" x="636" y="344" font-weight="600">chart X</text>
+<text class="tiny" x="776" y="344">top of its list</text>
+<text class="mono t-accent" x="910" y="344" text-anchor="end">1/60</text>
+<text class="tiny" x="618" y="364" font-weight="700">3</text>
+<text class="small" x="636" y="364">memo B or chart Y</text>
+<text class="tiny" x="776" y="364">second</text>
+<text class="mono t-accent" x="910" y="364" text-anchor="end">1/61</text>
+<text class="tiny" x="618" y="390">the best memo and the best chart both make the top 3</text>
+
+<!-- connectors -->
+<path class="edge-warn dashed" d="M512,156 C556,156 556,164 598,164" marker-end="url(#arrow-warn)"/>
+<path class="edge-accent" d="M512,180 C556,180 556,332 598,332" marker-end="url(#arrow-accent)"/>
+<path class="edge-warn dashed" d="M512,324 C556,324 556,164 598,164" marker-end="url(#arrow-warn)"/>
+<path class="edge-accent" d="M512,348 C556,348 556,332 598,332" marker-end="url(#arrow-accent)"/>
+<text class="tiny t-warn" x="520" y="148" font-weight="700">scores</text>
+<text class="tiny t-accent" x="520" y="366" font-weight="700">ranks</text>
+<text class="mono" x="248" y="432">score = sum over lists of 1 / (60 + rank)</text>
+<text class="small" x="600" y="432"><tspan class="mono">QueryFusionRetriever</tspan> · rank counts from 0</text>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTpkN2I2YmY1Yi04NDBlLTQzZTEtOGY3ZC03NTc4ZWYyZjk2ODMAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaAjciHcjcrDaTfkksFfLmwsAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpkM2RhOGFkOC03ZmQxLTQ4YzEtODM1Yy03MWIyN2JmYTU2MTRscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNodi6o3ucu4VtvLonvLUQiswAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggQnO/pDlxsmEYSSQt7/0h/g+BCsf7ATnhS8aVkNB4U8ykZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaMgmd8NeOVu7vYHdKy1/GPoAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIGiSzkuPHoLR7WEritXelduMueIW7MTu5yXkOHzalXH/ZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GSdiZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmQ3YjZiZjViLTg0MGUtNDNlMS04ZjdkLTc1NzhlZjJmOTY4My9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjcxMzRmOGM4LTE4ZTUtNDI3MS04OTZiLTFlZmY4Mzg4ZmMyM3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBCc7+kOXGyYRhJJC3v/SH+D4EKx/sBOeFLxpWQ0HhTzKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggQ0l9JjU3ZuB5fbDqZz7UgQeTut9QonXZwRGav/hjPeGiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggHyGUpP9/UTzUlBB9ti1BewnfbpAkN6ukqtIEa6BMrnh0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQFR5L5i4qq700/vWXx9n1OLGWX7seISdpMrn42QQMD+HR61cmdAiIv8X16zaXddrHlPGYTh6HAZjmfh5rBGIEu8=</c2pa:manifest></metadata></svg>

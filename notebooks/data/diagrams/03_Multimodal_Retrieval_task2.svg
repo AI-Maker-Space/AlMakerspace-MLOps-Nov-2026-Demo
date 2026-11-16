@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 448" role="img" aria-labelledby="title desc" xmlns:c2pa="http://c2pa.org/manifest">
+<title id="title">Retrieval narrows twelve files to three; the vision model reads only those</title>
+<desc id="desc">The question goes to the fused retriever, which searches all twelve files and returns three hits. The hits go into one message: the ANSWER_SYSTEM prompt, then the question, each memo as text labelled with its file name, and each chart as its file name followed by the chart&#x27;s pixels as a base64 image part. The vision model reads that one message and answers with file citations, for example Q4 with 27 thousand tickets, citing fig_tickets_quarterly.png. Twelve files are in the corpus and three are in the model&#x27;s input.</desc>
+<style>
+  .bg{fill:#FBFAF7}
+  .frame{fill:none;stroke:#E4E1DA;stroke-width:1}
+  .node{fill:#FFFFFF;stroke:#CBD2DA;stroke-width:1.25}
+  .node-soft{fill:#F2F1EC;stroke:none}
+  .node-accent{fill:#EEF0FF;stroke:#4F46E5;stroke-width:1.75}
+  .node-good{fill:#EAF7EE;stroke:#2F9E44;stroke-width:1.5}
+  .node-warn{fill:#FFF1E8;stroke:#D9480F;stroke-width:1.5}
+  .zone{fill:#F4F5FF;stroke:#4F46E5;stroke-width:1.5;stroke-dasharray:6 4}
+  .zone-plain{fill:none;stroke:#AEB6C0;stroke-width:1.25;stroke-dasharray:4 4}
+  .zone-warn{fill:#FFF6F0;stroke:#D9480F;stroke-width:1.5;stroke-dasharray:6 4}
+  .bar{fill:#B9C0FF}
+  .bar-accent{fill:#4F46E5}
+  .bar-muted{fill:#D5D9DE}
+  .bar-good{fill:#2F9E44}
+  .bar-warn{fill:#D9480F}
+  .edge{fill:none;stroke:#7D8794;stroke-width:1.5}
+  .edge-accent{fill:none;stroke:#4F46E5;stroke-width:2}
+  .edge-good{fill:none;stroke:#2F9E44;stroke-width:2}
+  .edge-warn{fill:none;stroke:#D9480F;stroke-width:2}
+  .dashed{stroke-dasharray:5 4}
+  .rule{fill:none;stroke:#E4E1DA;stroke-width:1}
+  .head{fill:#7D8794}
+  .head-accent{fill:#4F46E5}
+  .head-good{fill:#2F9E44}
+  .head-warn{fill:#D9480F}
+  text{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;fill:#1F2328;font-size:13px}
+  .title{font-size:17px;font-weight:650}
+  .subtitle{font-size:13px;fill:#5B6470}
+  .label{font-size:13px;font-weight:600}
+  .small{font-size:11.5px;fill:#5B6470}
+  .tiny{font-size:10.5px;fill:#5B6470}
+  .mono{font-family:Consolas,"SF Mono",ui-monospace,"JetBrains Mono",Menlo,monospace;font-size:12px}
+  .t-accent{fill:#4F46E5}
+  .t-good{fill:#2F9E44}
+  .t-warn{fill:#D9480F}
+  .t-muted{fill:#5B6470}
+  .t-inv{fill:#FFFFFF}
+  .chip{fill:#4F46E5}
+  .chip-warn{fill:#D9480F}
+  .chip-good{fill:#2F9E44}
+  .chip-muted{fill:#5B6470}
+  @media (prefers-color-scheme:dark){
+    .bg{fill:#15171C}
+    .frame{stroke:#2A2E36}
+    .node{fill:#1D2027;stroke:#3A414C}
+    .node-soft{fill:#22262E}
+    .node-accent{fill:#23264A;stroke:#8E8CFF}
+    .node-good{fill:#183224;stroke:#5FD07A}
+    .node-warn{fill:#3A2116;stroke:#FF8A4C}
+    .zone{fill:#1A1C33;stroke:#8E8CFF}
+    .zone-plain{stroke:#58606C}
+    .zone-warn{fill:#2A1A13;stroke:#FF8A4C}
+    .bar{fill:#4B4F9E}
+    .bar-accent{fill:#8E8CFF}
+    .bar-muted{fill:#3A414C}
+    .bar-good{fill:#5FD07A}
+    .bar-warn{fill:#FF8A4C}
+    .edge{stroke:#8892A0}
+    .edge-accent{stroke:#8E8CFF}
+    .edge-good{stroke:#5FD07A}
+    .edge-warn{stroke:#FF8A4C}
+    .rule{stroke:#2A2E36}
+    .head{fill:#8892A0}
+    .head-accent{fill:#8E8CFF}
+    .head-good{fill:#5FD07A}
+    .head-warn{fill:#FF8A4C}
+    text{fill:#E6E8EB}
+    .subtitle,.small,.tiny,.t-muted{fill:#9AA4AF}
+    .t-accent{fill:#A5A3FF}
+    .t-good{fill:#5FD07A}
+    .t-warn{fill:#FF8A4C}
+    .t-inv{fill:#15171C}
+    .chip{fill:#8E8CFF}
+    .chip-warn{fill:#FF8A4C}
+    .chip-good{fill:#5FD07A}
+    .chip-muted{fill:#9AA4AF}
+  }
+</style>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head" d="M0,0 L10,5 L0,10 z"/></marker>
+  <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+  <marker id="arrow-good" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-good" d="M0,0 L10,5 L0,10 z"/></marker>
+  <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="bg" x="0" y="0" width="960" height="448" rx="16"/>
+
+<text class="title" x="32" y="40">Retrieval narrows twelve files to three; the vision model reads only those</text>
+<text class="subtitle" x="32" y="62">Memo text and chart pixels travel in one message, and the answer cites the files it used.</text>
+
+<!-- question -->
+<rect class="node-accent" x="32" y="88" width="376" height="56" rx="10"/>
+<text class="tiny t-accent" x="48" y="108" letter-spacing="1.5" font-weight="700">THE QUESTION</text>
+<text class="small" x="48" y="130" font-weight="600">Which quarter had the most support tickets, and how many?</text>
+
+<!-- the corpus, 12 files -->
+<rect class="node" x="32" y="160" width="176" height="216" rx="14"/>
+<text x="50" y="186"><tspan class="label">corpus</tspan><tspan class="small">   12 files</tspan></text>
+<rect class="node-soft" x="52" y="208" width="40" height="30" rx="6"/>
+<text class="tiny" x="72" y="227" text-anchor="middle">memo</text>
+<rect class="node-soft" x="100" y="208" width="40" height="30" rx="6"/>
+<text class="tiny" x="120" y="227" text-anchor="middle">chart</text>
+<rect class="node-accent" x="148" y="208" width="40" height="30" rx="6"/>
+<text class="tiny t-accent" x="168" y="227" text-anchor="middle" font-weight="700">memo</text>
+<rect class="node-soft" x="52" y="246" width="40" height="30" rx="6"/>
+<text class="tiny" x="72" y="265" text-anchor="middle">chart</text>
+<rect class="node-soft" x="100" y="246" width="40" height="30" rx="6"/>
+<text class="tiny" x="120" y="265" text-anchor="middle">memo</text>
+<rect class="node-accent" x="148" y="246" width="40" height="30" rx="6"/>
+<text class="tiny t-accent" x="168" y="265" text-anchor="middle" font-weight="700">chart</text>
+<rect class="node-soft" x="52" y="284" width="40" height="30" rx="6"/>
+<text class="tiny" x="72" y="303" text-anchor="middle">memo</text>
+<rect class="node-accent" x="100" y="284" width="40" height="30" rx="6"/>
+<text class="tiny t-accent" x="120" y="303" text-anchor="middle" font-weight="700">chart</text>
+<rect class="node-soft" x="148" y="284" width="40" height="30" rx="6"/>
+<text class="tiny" x="168" y="303" text-anchor="middle">memo</text>
+<rect class="node-soft" x="52" y="322" width="40" height="30" rx="6"/>
+<text class="tiny" x="72" y="341" text-anchor="middle">chart</text>
+<rect class="node-soft" x="100" y="322" width="40" height="30" rx="6"/>
+<text class="tiny" x="120" y="341" text-anchor="middle">memo</text>
+<rect class="node-soft" x="148" y="322" width="40" height="30" rx="6"/>
+<text class="tiny" x="168" y="341" text-anchor="middle">chart</text>
+<text class="tiny" x="120" y="364" text-anchor="middle">highlighted: 3 hits (example)</text>
+
+<!-- Strategy C -->
+<rect class="node" x="248" y="216" width="160" height="80" rx="10"/>
+<text class="label mono" x="328" y="248" text-anchor="middle">retriever</text>
+<text class="small" x="328" y="268" text-anchor="middle">two stores, fused top 3</text>
+<line class="edge" x1="328" y1="144" x2="328" y2="214" marker-end="url(#arrow)"/>
+<line class="edge" x1="208" y1="256" x2="246" y2="256" marker-end="url(#arrow)"/>
+<text class="tiny" x="228" y="248" text-anchor="middle">all 12</text>
+
+<!-- one message -->
+<rect class="zone" x="456" y="88" width="256" height="256" rx="14"/>
+<text class="tiny t-accent" x="472" y="110" letter-spacing="1.5" font-weight="700">ONE MESSAGE</text>
+<line class="edge-accent" x1="408" y1="256" x2="454" y2="256" marker-end="url(#arrow-accent)"/>
+<text class="tiny t-accent" x="432" y="248" text-anchor="middle" font-weight="700">3 hits</text>
+<rect class="node" x="470" y="120" width="228" height="40" rx="8"/>
+<text class="mono" x="480" y="137">ANSWER_SYSTEM</text>
+<text class="small" x="480" y="153">context only; cite files like [file]</text>
+<text class="tiny" x="470" y="178" font-weight="700">then the user content, in order</text>
+<rect class="node" x="470" y="188" width="228" height="24" rx="6"/>
+<text class="small" x="480" y="204">Question: …  --- CONTEXT ---</text>
+<rect class="node" x="470" y="218" width="228" height="24" rx="6"/>
+<text class="small" x="480" y="234">[a memo hit]: the memo&#x27;s text</text>
+<rect class="node" x="470" y="248" width="228" height="24" rx="6"/>
+<text class="small" x="480" y="264">[fig_tickets_quarterly.png]:</text>
+<rect class="node-accent" x="470" y="278" width="228" height="24" rx="6"/>
+<text class="small t-accent" x="480" y="294" font-weight="600">image_url: the chart&#x27;s pixels</text>
+<rect class="node" x="470" y="308" width="228" height="24" rx="6"/>
+<text class="small" x="480" y="324">[the third hit] …</text>
+
+<!-- the vision model -->
+<rect class="node-accent" x="752" y="176" width="176" height="80" rx="10"/>
+<text class="label" x="840" y="208" text-anchor="middle">vision model</text>
+<text class="mono t-accent" x="840" y="228" text-anchor="middle">VLM_MODEL</text>
+<line class="edge-accent" x1="712" y1="216" x2="750" y2="216" marker-end="url(#arrow-accent)"/>
+<text class="tiny t-accent" x="732" y="208" text-anchor="middle" font-weight="700">reads</text>
+<rect class="node-good" x="456" y="368" width="472" height="48" rx="10"/>
+<text class="tiny" x="472" y="388" letter-spacing="1.5" font-weight="700">EXAMPLE ANSWER</text>
+<text x="472" y="406"><tspan class="small">Q4, with 27 thousand tickets </tspan><tspan class="mono t-good">[fig_tickets_quarterly.png]</tspan></text>
+<path class="edge-good" d="M840.0,256 L840.0,366" marker-end="url(#arrow-good)"/>
+<text class="tiny" x="848" y="316">answer + citations</text>
+
+<!-- the narrowing -->
+<text x="32" y="404"><tspan class="label">12 files</tspan><tspan class="small"> in the corpus,  </tspan><tspan class="label t-accent">3</tspan><tspan class="small"> in the model&#x27;s input.</tspan></text>
+<text class="small" x="32" y="422">At nine hundred screenshots: three image reads per query, not 900.</text>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTpjODgzOGZhOC1jNzEyLTRiYTQtOTQzNy1hMTI0OGQyMzY0YzMAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaDmaHJmpeqEB+dV8bJJCn00AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDplNGRkNDM5OC1lYmQyLTRlNGItYWE0Ni0wNjhmOGYyNWUwMmZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoMaJqmKcL8PYS25gVHvTyWwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggqGR6ijugFR3DeOvoSg+z/MHsdKKy061oP1pL7Th62CqkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaKXLSEpHyaftS2lnC9c9unAAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIPwffh0Rffih5ekMFWXyKRdVOZBGnN1cyJU3KAYAl3dqZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GSi6Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmM4ODM4ZmE4LWM3MTItNGJhNC05NDM3LWExMjQ4ZDIzNjRjMy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmVkZjJlMjcwLWIzOTItNGU5Ny1hMWY5LTExNzEyY2JmODkwNnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCCoZHqKO6AVHcN46+hKD7P8wex0orLTrWg/WkvtOHrYKqJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggT8Po1jpmRDvCNKpYY/tG3NeedpFtvYcxN3/0GOaOMCqiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggVRf/pQDWL9EGHiATqoZVlhUs3o0BMqtmwu34s5gwb7B0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQHBJ9auqIpYnsSM0GaV9YrW/rplUfli6r7XKyWrXmXCwgThU7qsNeElWst4AS/XBg1rrQKPhNhTDQytPLGbsvus=</c2pa:manifest></metadata></svg>

@@ -1,0 +1,24 @@
+[project]
+name = "aimakerspace-mlops-nov-2026-demo"
+version = "0.1.0"
+description = "MLOps World 2026 workshop: Agentic RAG, LLM Wiki (DCI) and Multimodal Retrieval, as three 15-minute marimo notebooks."
+requires-python = ">=3.12"
+dependencies = [
+    "marimo==0.23.16",
+    "nbformat>=5.10",                         # `marimo export ipynb`
+    "python-dotenv>=1.2",                     # helpers read .env
+    "litellm>=1.90",                          # one client for the chat and vision models
+    "pandas>=2.2",                            # marimo renders DataFrames as tables
+    # 01 Agentic RAG and 02 LLM Wiki
+    "llama-index-core>=0.14",                 # FunctionAgent, FunctionTool, MarkdownNodeParser
+    "llama-index-llms-litellm>=0.8",          # the agent's LLM through the same .env as everything else
+    "llama-index-retrievers-bm25>=0.8",       # BM25Retriever, the chunk search on the Agentic RAG side
+    "rank-bm25>=0.2.2",
+    # 03 Multimodal Retrieval
+    "qdrant-client>=1.12",                    # the vector database, in-process
+    "llama-index-vector-stores-qdrant>=0.10", # QdrantVectorStore, one per collection
+    "fastembed>=0.7",                         # bge-small and CLIP as ONNX, no torch
+]
+
+[tool.uv]
+package = false
