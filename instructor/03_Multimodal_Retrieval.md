@@ -8,10 +8,7 @@ at 15** — the final discussion follows.
 The sentence: *retrieval finds the chart; the vision model reads it; the
 model only ever reads three files.*
 
-Strategies A and B are **not** in this notebook. They are on Greg's slides
-and in the closing table. If asked, the one-line answers: A captions every
-image with a vision model at ingestion (expensive, as good as the caption);
-B puts words and pixels in one CLIP space (cheap, cannot read values).
+Strategies A and B are not in this notebook or its closing; they belong to Greg's slides. If asked, the one-line answers: A captions every image with a vision model at ingestion (expensive, as good as the caption); B puts words and pixels in one CLIP space (cheap, cannot read values).
 
 ## Pair 1 · Setup (0:00–5:00)
 
@@ -84,36 +81,11 @@ B puts words and pixels in one CLIP space (cheap, cannot read values).
   chart is in it. *"Retrieval found it. The vision model read 27 thousand
   off the bar. That number is in no memo."* Question 2 — churn — needs a
   chart **and** a memo; the answer cites both.
-- Close on the strategy table (do not read it; one sentence): *"We built C.
-  The default is C for breadth, with a vision model at answer time so exact
-  figures come from pixels. Scans: same three strategies, OCR as the parser.
-  Video: transcript chunks by time window in the text store, a frame per
-  window in the image store, a timestamp on every citation."* Hand to Greg
-  for the which-one-should-I-use discussion.
-
-## Bonus · Task 3: video (not in the 15)
-
-At the bottom of the notebook, after the strategy table. Pre-run with the
-rest (it is one more vision call). Cut it first; the closing sentence
-already says what it shows. If the room is quick, it is two minutes:
-
-- **Diagram (60 s).** Five timestamped segments across the top. One
-  segment becomes two records with the same name, `review.mp4 @ 26–37 s`:
-  the transcript text into the text store, the keyframe at 31 s into the
-  CLIP store. Right side: the exact pipeline from Tasks 1 and 2. *"Nothing
-  new. Two stores, keyed by time."*
-- **Code (60 s).** `stamp` is the whole trick — the same `file_name` on the
-  text and the frame. `segments`, `frames`, then `index_v` and
-  `retriever_v` are Task 1's lines with a different list, and
-  `answer(video_question, retriever_v)` is Task 2's function. Read the
-  `read:` line under the answer: every record is a moment in the video.
-  *"For Nadia's calls: a transcript per call, chunked by time window, a
-  frame per window, a timestamp on every citation."*
-
-If the team decides to bring it inside the 15: run 3 / 5 / 4 / 3 — Setup
-to three minutes (one sentence on the plumbing cell), Task 2 to one demo
-question, video at 12–15 — with the rule *"not at Task 3 by 12:00, skip
-it."*
+- Close on the division of labour line under the answers: *"Retrieval found
+  the chart; the vision model read the number; three files went to the
+  model, not twelve. For scans, the same two stores with OCR text; for video,
+  transcript segments and frames keyed by timestamp — that's the bonus task
+  below."* Hand to Greg for the which-one-should-I-use discussion.
 
 ## If you run over
 

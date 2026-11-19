@@ -235,13 +235,24 @@ def _(ui):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    `MultiModalVectorStoreIndex` with `vector_store=` and `image_store=` is
-    the two stores in the diagram. `as_retriever` gives the top 3 from each.
-    `MemoSearch` and `ChartSearch` expose the two halves as retrievers of
-    their own, and `QueryFusionRetriever(mode="reciprocal_rerank")` is the
-    fusion. `num_queries=1` turns off its query rewriting, which is why a
-    `MockLLM` is enough. The first table is the raw scores; the second is the
-    fused ranking.
+    Think of two filing cabinets: one for memos, one for charts.
+
+    - `MultiModalVectorStoreIndex` owns both cabinets at once. `vector_store=`
+      is the memo cabinet, `image_store=` is the chart cabinet.
+    - `as_retriever` is the clerk. Give it a question and it pulls the three
+      best memos from one cabinet and the three best charts from the other.
+    - `MemoSearch` and `ChartSearch` are two small helpers that let us ask
+      each cabinet on its own, so the two lists can be seen side by side.
+    - `QueryFusionRetriever` merges the two lists into one.
+      `mode="reciprocal_rerank"` means: ignore the scores (they are on
+      different scales) and compare *positions* — first place on either list
+      counts the same. It would normally ask a language model to rewrite the
+      question a few ways; `num_queries=1` switches that off, so the
+      `MockLLM` it still asks for is a stand-in that is never used.
+
+    The first table is each cabinet's own scores. The second is the one
+    merged list, shown as a share of the top score so the numbers are
+    readable.
     """)
     return
 
@@ -281,10 +292,16 @@ def _(
         return [{"rank": rank, "file": hit.node.metadata["file_name"], "kind": "chart" if hasattr(hit.node, "image_path") else "memo",
                  "score": round(hit.score, 3)} for rank, hit in enumerate(hits, start=1)]
 
+    def fused_rows(hits):
+        """Rank-fusion scores are tiny fractions (1/61 for first place on one list). Show them as a share of the top score."""
+        top = hits[0].score if hits else 1
+        return [{"rank": rank, "file": hit.node.metadata["file_name"], "kind": "chart" if hasattr(hit.node, "image_path") else "memo",
+                 "fused score (% of top)": f"{100 * hit.score / top:.0f}%"} for rank, hit in enumerate(hits, start=1)]
+
     question_1 = "why did the on-call engineer get paged about the Coast region?"
     mo.vstack([
         ui.table(rows(both.retrieve(question_1)), title=f"Raw scores · '{question_1}' · two embedders, two scales"),
-        ui.table(rows(retriever.retrieve(question_1)), title="Fused by rank · the best memo and the best chart both make the top 3"),
+        ui.table(fused_rows(retriever.retrieve(question_1)), title="Fused by rank · the best memo and the best chart both make the top 3"),
     ])
     return (retriever,)
 
@@ -406,38 +423,9 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     ---
-    ## 📋 Where this sits among the three strategies
-
-    This notebook built **C**. The other two ways of getting a text question
-    to return an image are on the slides; the table is the decision.
-
-    | | **A. Caption → text** | **B. One shared space** | **C. Separate + fuse** (this notebook) |
-    | --- | --- | --- | --- |
-    | Cross-modal search | via captions only | native (pixels) | native (chart store) |
-    | Ingestion cost | high: a vision call per image | low: one embedding per image | medium |
-    | Fine-grained numbers | as good as the caption | weak: CLIP cannot read values | text strong, image weak |
-    | Moving parts | fewest | few | most |
-    | Best when | text-heavy, few figures | image-dominant corpora | each modality deserves its own embedder |
-    | Main failure | the caption missed the ask | modality gap; cannot read values | rank calibration across stores |
-
-    **The practical default is C for breadth, always paired with a vision
-    model at answer time so exact figures are read from pixels.** If the
-    non-text content is scanned documents rather than charts, the strategies
-    are the same and the parser is OCR, not a vision model. If it is video,
-    the text store holds transcript chunks by time window and the image store
-    holds one frame per window, and every citation carries a timestamp.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ---
     ## 🎁 Bonus · Task 3: Video is the same two stores, keyed by time
 
-    *Not part of the 15 minutes. Cut it first; the sentence above already
-    says what it shows.*
+    *Not part of the 15 minutes. Cut it first if time is short.*
 
     A support call recording, or this 45-second narrated review, is text and
     pictures in a time series. Speech-to-text gives transcript segments with

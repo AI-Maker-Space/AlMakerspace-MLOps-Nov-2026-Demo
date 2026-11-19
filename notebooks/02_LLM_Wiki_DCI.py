@@ -161,21 +161,30 @@ def _(mo):
     mo.md(r"""
     The three boxes in the diagram are the three functions below. Nothing is
     embedded, nothing is downloaded, and every tool result is a string a
-    person can read. Three choices are deliberate, and all three put the
-    wiki's structure into the interface rather than into instructions:
+    person can read.
 
-    - `page` is a `Literal` of the seven names, which becomes an `enum` in
-      the schema. The model cannot ask for a page that does not exist.
-    - `read_page`'s description carries the index: one line per page saying
-      what it is for. The model knows which page covers tariffs **before its
-      first call**. In 01 it knew nothing.
-    - `grep_wiki` is scoped to one page. You search inside a page the caller
-      may read, which is where a legal-hold filter lives, and you never scan
-      the corpus. A corpus-wide grep is a word search again, and a model
-      given one uses it like RAG.
+    The model never sees this Python. What it gets is a **menu**: for each
+    tool, its name, a sentence saying what it does, and the values it will
+    accept. (The technical name for that menu is the *schema*.) Three things
+    about how we wrote the menu do most of the work:
 
-    `grep_wiki` caps at 40 lines, the way `search_chunks` capped at 1,000
-    characters.
+    - **The page name is a fixed list, not free text.** `page` can only be
+      one of the seven file names. In Python that rule is written as a
+      `Literal`; on the menu it shows up as an `enum`, a closed list of
+      allowed values. It cannot invent a page.
+    - **The menu says what each page is for.** `read_page`'s description
+      includes the index, one line per page: *tariffs — pricing, minimum
+      terms*, and so on. So the model knows which page covers tariffs
+      **before it makes its first call**.
+    - **Search is limited to one page at a time.** `grep_wiki` needs a page
+      name before a pattern. That keeps every search inside a page this user
+      is allowed to read (which is exactly where a legal-hold rule would sit),
+      and it never scans the whole corpus. A search over everything is just
+      keyword search again, and a model given one falls back to using it like
+      the RAG agent did.
+
+    `grep_wiki` returns at most 40 lines, the way `search_chunks` returned at
+    most 1,000 characters.
     """)
     return
 
