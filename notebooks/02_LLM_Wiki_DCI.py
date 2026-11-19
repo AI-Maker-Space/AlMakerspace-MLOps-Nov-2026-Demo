@@ -95,7 +95,18 @@ def _(mo):
     QUESTION = "Which plan costs forty-five pounds a month, and how long am I tied in for?"
 
     print(f"✅ model: {CFG}   {len(PAGES)} pages + index.md ({len(PAGE_MAP)} rows)   question: {QUESTION!r}")
-    return CFG, Literal, PAGES, PAGE_MAP, QUESTION, WIKI_INDEX, json, re, time, ui
+    return (
+        CFG,
+        Literal,
+        PAGES,
+        PAGE_MAP,
+        QUESTION,
+        WIKI_INDEX,
+        json,
+        re,
+        time,
+        ui,
+    )
 
 
 @app.cell(hide_code=True)
@@ -132,7 +143,14 @@ def _(CFG):
         "Cite page names. If evidence is incomplete, say so."
     )
     print(f"✅ same model, same system prompt as 01: {SYSTEM[:60]}…")
-    return FunctionAgent, FunctionTool, LLM, SYSTEM, ToolCallResult, WorkflowRuntimeError
+    return (
+        FunctionAgent,
+        FunctionTool,
+        LLM,
+        SYSTEM,
+        ToolCallResult,
+        WorkflowRuntimeError,
+    )
 
 
 @app.cell(hide_code=True)
@@ -248,7 +266,7 @@ def _(grep_wiki, list_pages, mo):
 
     mo.vstack([
         tool_box("list_pages() — the index, as the agent sees it", list_pages()[:900]),
-        tool_box("grep_wiki('northline_tariffs_and_slas.md', '45') — the lines with a 45 in them, on that page only", grep_wiki("northline_tariffs_and_slas.md", "45")[:900]),
+        tool_box("grep_wiki('northline_tariffs_and_slas.md', '*-') — the lines with a 45 in them, on that page only", grep_wiki("northline_tariffs_and_slas.md", "45")[:900]),
     ], gap=1)
     return
 
